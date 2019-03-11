@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import styled from "styled-components";
 
-export default class DragandDrop extends Component{
+export default class DropzoneArea extends Component{
 	state = {};
 	render(){
 		return(
