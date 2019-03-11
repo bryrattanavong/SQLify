@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import DropzoneArea from "./components/DropzoneArea";
-import './App.css';
 
 class App extends Component {
 	render(){
 		return (
 			<div>
-				<h1 style={{ textAlign: "center" }}>SQLify</h1>
+				<h1 style={{ textAlign: "center", paddingBottom: "20px" }}>SQLify</h1>
 				<DropzoneArea/>
 			</div>
 		);
