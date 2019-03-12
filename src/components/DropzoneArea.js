@@ -27,8 +27,8 @@ export default class DropzoneArea extends Component {
 					<DropArea {...getRootProps()} >
 						<input {...getInputProps()} />
 						<div style={{width:"100%"}}>
-							Drop a db file here, or click to select files to
-							upload a db file.
+							Drop a .db file here, or click to select files to
+							upload a .db file.
 						</div>
 					</DropArea>
 				);
