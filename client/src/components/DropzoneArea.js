@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Dropzone from "react-dropzone";
 import styled from "styled-components";
+import axios from "axios";
 
 const DropArea = styled.div`
 	display: flex;
@@ -14,19 +15,26 @@ const DropArea = styled.div`
 `;
 
 export default class DropzoneArea extends Component {
-	state = {};
 
-	onDrop(){
-		console.log( "hello" )
-	}
+	onDrop = async ( content ) => {
+		const readUploadedFile = file => {
+			return new Promise( ( resolve, reject ) => {
+				const fr = new FileReader;
+				fr.onload = () => resolve( fr.result );
+				fr.readAsBinaryString( file );
+			} );
+		};
+		const readFile = await readUploadedFile( content[0] );
+		const dataPost = await axios.post( "http://localhost:80/readDBFile", readFile );
+	};
 
 	render(){
-		return <Dropzone onDrop={this.onDrop}>
+		return <Dropzone onDrop={this.onDrop} multiple={false}>
 			{( { getRootProps, getInputProps } ) => {
 				return (
 					<DropArea {...getRootProps()} >
 						<input {...getInputProps()} />
-						<div style={{width:"100%"}}>
+						<div style={{ width: "100%" }}>
 							Drop a .db file here, or click to select files to
 							upload a .db file.
 						</div>
