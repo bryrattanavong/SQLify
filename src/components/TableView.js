@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import SQLOperations from "../utils/sqlOperations";
 import { FileContext } from "../utils/FileContext";
@@ -15,50 +15,48 @@ const TablesView = styled.div`
   min-height: 100%;
 `;
 
-export default class TableView extends Component {
-	constructor( props ){
-		super( props );
-		this.state = { rows: [] };
-	}
+export default (props) => {
+    const [rows, setRows] = useState([]);
+    const [mounted, setMounted] = useState(false);
+    const context = useContext(FileContext);
 
-	componentDidMount(){
-		const object = SQL.getTableNamesAndRows( this.context );
+    useEffect(() => {
+        if(!mounted) {
+            const object = SQL.getTableNamesAndRows(context);
 
-		let id = 0;
-		let tempRows = [];
-		for( let key in object ){
-			id += 1;
-			tempRows.push( { id: id, name: key, count: object[key] } );
-		}
-		this.setState( { rows: tempRows } );
-	}
+            let id = 0;
+            let tempRows = [];
+            for( let key in object ){
+                id += 1;
+                tempRows.push( { id: id, name: key, count: object[key] } );
+            }
+            setRows(tempRows);
+            setMounted(true);
+        }
+      });
 
-	render(){
-		return (
-			<TablesView>
-				<Paper>
-					<Table>
-						<TableHead>
-							<TableRow>
-								<TableCell>Table Name</TableCell>
-								<TableCell align="right">Number of Rows</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							{this.state.rows.map( row => (
-								<TableRow key={row.id} onClick={() => this.props.onClick( row.name )}>
-									<TableCell component="th" scope="row">
-										{row.name}
-									</TableCell>
-									<TableCell align="right">{row.count}</TableCell>
-								</TableRow>
-							) )}
-						</TableBody>
-					</Table>
-				</Paper>
-			</TablesView>
-		);
-	}
+      return (
+        <TablesView>
+        	<Paper>
+        		<Table>
+        			<TableHead>
+        				<TableRow>
+        					<TableCell>Table Name</TableCell>
+        					<TableCell align="right">Number of Rows</TableCell>
+        				</TableRow>
+        			</TableHead>
+        			<TableBody>
+        				{rows.map( row => (
+        					<TableRow key={row.id} onClick={() => props.onClick( row.name )}>
+        						<TableCell component="th" scope="row">
+        							{row.name}
+        						</TableCell>
+        						<TableCell align="right">{row.count}</TableCell>
+        					</TableRow>
+        				) )}
+        			</TableBody>
+        		</Table>
+        	</Paper>
+        </TablesView>
+      );
 }
-
-TableView.contextType = FileContext;
