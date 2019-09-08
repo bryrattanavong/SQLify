@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import TableView from "./TableView";
 import DataView from "./DataView";
@@ -16,23 +16,16 @@ const DatabaseView = styled.div`
 `;
 
 
-export default class DatabaseViewer extends Component {
-	   
-	constructor(props){
-		super(props);
-		this.state = {table: ''};
-	}
-	render(){
-		return (
-			<DatabaseView>
-				<TableView onClick={(name) => this.onClick(name)}/>
-				<DataView table={this.state.table}/>
-			</DatabaseView>
-        );
-	}
-
-	onClick(name) {
-		console.log(name);
-		this.setState({table: name});
-	}
+export default () => {
+	const [table, setTable] = useState( '' );
+	const onClick = ( name ) => {
+		console.log( name );
+		setTable( name );
+	};
+	return (
+		<DatabaseView>
+			<TableView onClick={( name ) => onClick( name )}/>
+			<DataView table={table}/>
+		</DatabaseView>
+	);
 }

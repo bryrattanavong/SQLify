@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {  useState } from "react";
 import styled from "styled-components";
 import SQLOperations from "../utils/sqlOperations";
 import { FileContext } from "../utils/FileContext";
@@ -15,51 +15,47 @@ const DatasView = styled.div`
   height: 100%;
 `;
 
-export default class DataView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { rows: [], columnNames: [] };
-  }
-  
-  //Need to get data from the this.props.table and render it
+export default (props) => {
+	const [rows, setRows] = useState([]);
+	const [columnNames, setColumnNames] = useState([]);
 
-  createColumnJSX() {
-    return this.state.columnNames.map(column => (
-      <div>
-      <TableCell>{column}</TableCell>
-      </div>
-    ))
-  }
+	//Need to get data from the this.props.table and render it
 
-  createRowJSX() {
+	const createColumnJSX = () => {
+		return columnNames.map( column => (
+			<div>
+				<TableCell>{column}</TableCell>
+			</div>
+		) )
+	}
 
-  }
+	const createRowJSX = () => {
 
-  render() {
-    return (
-        <DatasView>
-          <Paper>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  {this.createColumnJSX}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.state.rows.map(row => (
-                  <TableRow key={row.id} onClick={()=>this.props.onClick(row.name)}>
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.count}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Paper>
-       </DatasView>
-    );
-  }
-}
+	}
+
+		return (
+			<DatasView>
+				<Paper>
+					<Table>
+						<TableHead>
+							<TableRow>
+								{createColumnJSX}
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{rows.map( row => (
+								<TableRow key={row.id} onClick={() => props.onClick( row.name )}>
+									<TableCell component="th" scope="row">
+										{row.name}
+									</TableCell>
+									<TableCell align="right">{row.count}</TableCell>
+								</TableRow>
+							) )}
+						</TableBody>
+					</Table>
+				</Paper>
+			</DatasView>
+		);
+	}
 
 DataView.contextType = FileContext;

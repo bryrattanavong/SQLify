@@ -16,49 +16,49 @@ const TablesView = styled.div`
 `;
 
 export default class TableView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { rows: [] };
-  }
+	constructor( props ){
+		super( props );
+		this.state = { rows: [] };
+	}
 
-  componentDidMount() {
-    const object = SQL.getTableNamesAndRows(this.context);
+	componentDidMount(){
+		const object = SQL.getTableNamesAndRows( this.context );
 
-    let id = 0;
-    let tempRows = [];
-    for (let key in object) {
-      id += 1;
-      tempRows.push({ id: id, name: key, count: object[key] });
-    }
-    this.setState({ rows: tempRows });
-  }
+		let id = 0;
+		let tempRows = [];
+		for( let key in object ){
+			id += 1;
+			tempRows.push( { id: id, name: key, count: object[key] } );
+		}
+		this.setState( { rows: tempRows } );
+	}
 
-  render() {
-    return (
-      <TablesView>
-        <Paper>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Table Name</TableCell>
-                <TableCell align="right">Number of Rows</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.rows.map(row => (
-                <TableRow key={row.id} onClick={()=>this.props.onClick(row.name)}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.count}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Paper>
-      </TablesView>
-    );
-  }
+	render(){
+		return (
+			<TablesView>
+				<Paper>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell>Table Name</TableCell>
+								<TableCell align="right">Number of Rows</TableCell>
+							</TableRow>
+						</TableHead>
+						<TableBody>
+							{this.state.rows.map( row => (
+								<TableRow key={row.id} onClick={() => this.props.onClick( row.name )}>
+									<TableCell component="th" scope="row">
+										{row.name}
+									</TableCell>
+									<TableCell align="right">{row.count}</TableCell>
+								</TableRow>
+							) )}
+						</TableBody>
+					</Table>
+				</Paper>
+			</TablesView>
+		);
+	}
 }
 
 TableView.contextType = FileContext;
