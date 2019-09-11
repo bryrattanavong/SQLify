@@ -41,6 +41,7 @@ const SQLOperations = {
 		while( sel.step() ){
 			result.push( sel.getAsObject() );
 		}
+		console.log(result);
 		return result;
 	}
 }

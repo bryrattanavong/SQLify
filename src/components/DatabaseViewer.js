@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import TableView from "./TableView";
 import DataView from "./DataView";
+import SQLOperations from "../utils/sqlOperations";
+import { FileContext } from "../utils/FileContext";
 
 const DatabaseView = styled.div`
 	display: flex;
@@ -18,9 +20,11 @@ const DatabaseView = styled.div`
 
 export default () => {
 	const [table, setTable] = useState( '' );
+	const context = useContext(FileContext);
 	const onClick = ( name ) => {
 		console.log( name );
 		setTable( name );
+		SQLOperations.getDataFromTable(context, name)
 	};
 	return (
 		<DatabaseView>
