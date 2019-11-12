@@ -33,7 +33,7 @@ export default (props) => {
             setRows(tempRows);
             setMounted(true);
         }
-      });
+      }, []);
 
       return (
         <TablesView>

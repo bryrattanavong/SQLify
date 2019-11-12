@@ -19,8 +19,6 @@ export default (props) => {
 	const [rows, setRows] = useState([]);
 	const [columnNames, setColumnNames] = useState([]);
 
-	//Need to get data from the this.props.table and render it
-
 	const createColumnJSX = () => {
 		return columnNames.map( column => (
 			<div>
