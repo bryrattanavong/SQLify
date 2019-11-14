@@ -36,7 +36,6 @@ const SQLOperations = {
 	getDataFromTable: function( dbFile, table ){
 		let db = new window.SQL.Database( new Uint8Array( dbFile ) );
 		let result = [];
-		console.log( dbFile );
 		let sel = db.prepare( "SELECT * from '" + table + "'" );
 		while( sel.step() ){
 			result.push( sel.getAsObject() );

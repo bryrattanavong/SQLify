@@ -22,7 +22,6 @@ export default () => {
 	const [table, setTable] = useState( '' );
 	const context = useContext(FileContext);
 	const onClick = ( name ) => {
-		console.log( name );
 		setTable( name );
 		SQLOperations.getDataFromTable(context, name)
 	};
